@@ -1,6 +1,7 @@
 import React , {useEffect , useState} from 'react'
 import Movie from "./Components/Movie";
 import ReactLoading from 'react-loading';
+import Blank from './Components/Blank';
 
 
 const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=31e97290a9c7ef2f3b7ca180465c44dc";
@@ -15,7 +16,6 @@ function App() {
   const getMovies= (API)=>{
     fetch(API).then((res)=>res.json())
         .then((data)=>{
-          console.log("==>>" , data.results)
           setMovies(data.results)
         })
   }
@@ -30,8 +30,8 @@ function App() {
   const handleSubmit = (e)=>{
     e.preventDefault();
     if(search){
-      getMovies(SEARCH_API + search)
-    }
+     getMovies(SEARCH_API + search)
+      }
     }
 
   const handleChange = (e)=>{
@@ -55,9 +55,9 @@ function App() {
         </form>
       </header>
       <div className="movie-container">
-        {movies.length > 0 && movies.map(movie =>
+        {movies.length > 0 ? movies.map(movie =>
         <Movie key={movie.id} {...movie}/>
-        )}
+        ) : <Blank search={search}/>}
     </div>
       </div>
     }      
